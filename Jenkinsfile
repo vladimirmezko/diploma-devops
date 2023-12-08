@@ -1,21 +1,17 @@
 pipeline {
     agent any
     environment {
-        AWS_ACCESS_KEY_ID     = credentials('aws-access-key-id')
-        AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
-        AWS_ACCOUNT_ID        = '097084951758'
+        AWS_CREDENTIALS_ID     = 'aws-credentials'
     }
     stages {
         stage('Terraform Apply') {
             steps {
-                script {
-                    withCredentials([
-                        [ $class: 'AmazonWebServicesCredentialsBinding',
-                          credentialsId: 'aws-access-key-id',
-                          accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                          secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-                        ]
-                    ]) {
+                withCredentials([
+                    [ $class: 'AmazonWebServicesCredentialsBinding',
+                      credentialsId: AWS_CREDENTIALS_ID,
+                    ]
+                ]) {
+                    script {
                         sh 'terraform init'
                         sh 'terraform apply -auto-approve'
                     }
