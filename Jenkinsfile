@@ -1,17 +1,20 @@
 pipeline {
     agent any
-
+    environment {
+        AWS_CREDENTIALS_ID     = 'aws-credentials'
+    }
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
         stage('Terraform Apply') {
             steps {
-                script {
-                    sh 'terraform init'
-                    sh 'terraform apply -auto-approve'
+                withCredentials([
+                    [ $class: 'AmazonWebServicesCredentialsBinding',
+                      credentialsId: AWS_CREDENTIALS_ID,
+                    ]
+                ]) {
+                    script {
+                        sh 'terraform init'
+                        sh 'terraform apply -auto-approve'
+                    }
                 }
             }
         }
