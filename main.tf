@@ -20,7 +20,7 @@ terraform {
 
 resource "aws_instance" "jenkins" {
   ami           = var.image_id
-  instance_type = "t2.micro"
+  instance_type = "t3.medium"
 
   key_name = "devops"  
 
