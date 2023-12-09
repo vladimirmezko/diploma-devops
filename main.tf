@@ -29,6 +29,7 @@ resource "aws_instance" "jenkins" {
   tags = {
     Name = "JenkinsServer-mezko-diploma"
     Environment = "dev"
+    Environment = "test-autodeploy"
   }
 }
 
