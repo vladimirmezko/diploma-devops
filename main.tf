@@ -44,7 +44,8 @@ resource "aws_eip" "lb" {
 resource "aws_ecr_repository" "my_ecr_repo" {
   name = "mezko-ecr-diploma"
   tags = {
-    Environment = "dev"
+    Environment = "devstest"
+	
   }  
 }
 
